@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewStatus"
+            type="com.example.moviereview.ui.utils.DataStatus.Status" />
+
+        <import type="android.view.View" />
+
+        <import type="com.example.moviereview.ui.utils.DataStatus.Status" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.views.saved.SavedFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="@{viewStatus == Status.SUCCESS ? View.VISIBLE : View.GONE}"
+            android:id="@+id/rvSavedMedia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_default"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/margin_default"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_media" />
+
+        <include
+            android:visibility="@{viewStatus == Status.LOADING ? View.VISIBLE : View.GONE}"
+            android:id="@+id/savedFragmentLoading"
+            layout="@layout/layout_loading" />
+
+        <include
+            android:visibility="@{viewStatus == Status.ERROR ? View.VISIBLE : View.GONE}"
+            android:id="@+id/savedFragmentError"
+            layout="@layout/layout_error" />
+
+        <include
+            android:visibility="@{viewStatus == Status.EMPTY ? View.VISIBLE : View.GONE}"
+            android:id="@+id/savedFragmentEmpty"
+            layout="@layout/layout_empty" />
+    </LinearLayout>
+</layout>

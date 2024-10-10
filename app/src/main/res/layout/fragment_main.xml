@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewStatus"
+            type="com.example.moviereview.ui.utils.DataStatus.Status" />
+
+        <variable
+            name="trendingStatus"
+            type="com.example.moviereview.ui.utils.DataStatus.Status" />
+
+        <variable
+            name="popularMoviesStatus"
+            type="com.example.moviereview.ui.utils.DataStatus.Status" />
+
+        <variable
+            name="popularShowsStatus"
+            type="com.example.moviereview.ui.utils.DataStatus.Status" />
+
+        <import type="android.view.View" />
+
+        <import type="com.example.moviereview.ui.utils.DataStatus.Status" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:fillViewport="true"
+        tools:context=".ui.views.main.MainFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/mainFragmentContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="@{viewStatus == Status.SUCCESS ? View.VISIBLE : View.GONE}">
+
+                <TextView
+                    android:id="@+id/titleTrendingMedia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:text="@string/title_trending_today"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="@{trendingStatus == Status.SUCCESS ? View.VISIBLE : View.GONE}" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTrendingMedia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:orientation="horizontal"
+                    android:visibility="@{trendingStatus == Status.SUCCESS ? View.VISIBLE : View.GONE}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_backdrop" />
+
+                <TextView
+                    android:id="@+id/titlePopularMovies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:text="@string/title_popular_movies"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="@{popularMoviesStatus == Status.SUCCESS ? View.VISIBLE : View.GONE}" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPopularMovies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:orientation="horizontal"
+                    android:visibility="@{popularMoviesStatus == Status.SUCCESS ? View.VISIBLE : View.GONE}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_poster" />
+
+                <TextView
+                    android:id="@+id/titlePopularTvShows"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:text="@string/title_popular_tv_shows"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="@{popularShowsStatus == Status.SUCCESS ? View.VISIBLE : View.GONE}" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPopularTvShows"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_default"
+                    android:layout_marginTop="@dimen/margin_default"
+                    android:orientation="horizontal"
+                    android:visibility="@{popularShowsStatus == Status.SUCCESS ? View.VISIBLE : View.GONE}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_poster" />
+
+            </LinearLayout>
+
+            <include
+                android:id="@+id/mainFragmentLoading"
+                layout="@layout/layout_loading"
+                android:visibility="@{viewStatus == Status.LOADING ? View.VISIBLE : View.GONE}" />
+
+            <include
+                android:id="@+id/mainFragmentError"
+                layout="@layout/layout_error"
+                android:visibility="@{viewStatus == Status.ERROR ? View.VISIBLE : View.GONE}" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

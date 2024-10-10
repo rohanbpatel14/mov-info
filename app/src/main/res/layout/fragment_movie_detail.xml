@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.example.moviereview.ui.utils.DataStatus.Status" />
+
+        <variable
+            name="viewStatus"
+            type="com.example.moviereview.ui.utils.DataStatus.Status" />
+
+        <variable
+            name="data"
+            type="com.example.moviereview.ui.models.UIMovieDetail" />
+
+        <variable
+            name="isSaved"
+            type="Boolean" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.views.moviedetail.MovieDetailFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/movieDetailInformation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/margin_default"
+                    android:orientation="vertical"
+                    android:visibility="@{viewStatus == Status.SUCCESS ? View.VISIBLE : View.GONE}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_overview"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:text="@{data.overview.empty ? @string/label_no_description : data.overview}"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:text="@string/title_cast"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="@{data.cast.empty ? View.GONE : View.VISIBLE}" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvMovieDetailCast"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:orientation="horizontal"
+                        android:visibility="@{data.cast.empty ? View.GONE : View.VISIBLE}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_cast" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:text="@string/title_images"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvMovieDetailImages"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:orientation="horizontal"
+                        android:visibility="@{data.images.empty ? View.GONE : View.VISIBLE}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_image" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:text="@string/label_no_images"
+                        android:visibility="@{data.images.empty ? View.VISIBLE : View.GONE}" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:text="@string/title_similar"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="@{data.similar.empty ? View.GONE : View.VISIBLE}" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvMovieDetailSimilar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:orientation="horizontal"
+                        android:visibility="@{data.similar.empty ? View.GONE : View.VISIBLE}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="4"
+                        tools:listitem="@layout/item_poster" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:text="@string/label_no_recommendations"
+                        android:visibility="@{data.similar.empty ? View.VISIBLE : View.GONE}" />
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/movieDetailLoading"
+                    layout="@layout/layout_loading"
+                    android:visibility="@{viewStatus == Status.LOADING ? View.VISIBLE : View.GONE}" />
+
+                <include
+                    android:id="@+id/movieDetailError"
+                    layout="@layout/layout_error"
+                    android:visibility="@{viewStatus == Status.ERROR ? View.VISIBLE : View.GONE}" />
+
+                <include
+                    android:id="@+id/movieDetailEmpty"
+                    layout="@layout/layout_empty"
+                    android:visibility="@{viewStatus == Status.EMPTY ? View.VISIBLE : View.GONE}" />
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/movieDetailHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            android:visibility="@{viewStatus == Status.SUCCESS ? View.VISIBLE : View.GONE}"
+            app:elevation="0dp">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="@android:color/transparent"
+                app:expandedTitleTextAppearance="@android:color/transparent"
+                app:layout_scrollFlags="scroll|snap">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/movieDetailBackdropImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="fitXY"
+                        android:src="@android:color/black"
+                        app:backdropImage="@{data.backdropPath}"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fbSaveMovie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_default"
+                        android:tint="@android:color/white"
+                        app:layout_constraintBottom_toBottomOf="@id/movieDetailBackdropImage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:savedStatusImg="@{isSaved}" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/movieDetailPosterCv"
+                        android:layout_width="120dp"
+                        android:layout_height="175dp"
+                        android:layout_marginStart="@dimen/margin_default"
+                        app:cardCornerRadius="@dimen/margin_default"
+                        app:cardElevation="0dp"
+                        app:layout_constraintBottom_toBottomOf="@id/movieDetailInfoLayout"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <ImageView
+                            android:id="@+id/movieDetailPoster"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/poster_placeholder"
+                            app:posterImage="@{data.posterPath}" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:id="@+id/movieDetailInfoLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_default"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:layout_marginEnd="@dimen/margin_default"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/movieDetailPosterCv"
+                        app:layout_constraintTop_toBottomOf="@id/movieDetailBackdropImage">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="marquee"
+                            android:text="@{data.name}"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            tools:text="Rick and Morty" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_half"
+                            android:ellipsize="marquee"
+                            android:singleLine="true"
+                            android:text="@{data.genres}"
+                            android:textSize="16sp"
+                            tools:text="Action, Sci-Fi, Drama" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_half"
+                            android:ellipsize="marquee"
+                            android:text="@{@string/label_average(data.voteAverage)}"
+                            android:textSize="16sp"
+                            tools:text="9.5 /10" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

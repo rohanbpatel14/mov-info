@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.example.moviereview.ui.models.UIFilter" />
+
+        <variable
+            name="clickListener"
+            type="com.example.moviereview.ui.adapters.GenericRvAdapter.GenericItemListener" />
+
+    </data>
+
+    <TextView
+        android:id="@+id/mediaTypeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:background="@drawable/shape_rounded"
+        android:onClick="@{() -> clickListener.onClick(item)}"
+        android:paddingStart="@dimen/margin_double"
+        android:paddingTop="@dimen/margin_default"
+        android:paddingEnd="@dimen/margin_double"
+        android:paddingBottom="@dimen/margin_default"
+        android:text="@{item.name}"
+        android:textSize="16sp"
+        app:isSelected="@{item.selected}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Movie" />
+</layout>

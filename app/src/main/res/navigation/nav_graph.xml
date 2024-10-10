@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.moviereview.ui.views.main.MainFragment"
+        android:label="MovInfo"
+        tools:layout="@layout/fragment_main" />
+
+    <fragment
+        android:id="@+id/discoverFragment"
+        android:name="com.example.moviereview.ui.views.discover.DiscoverFragment"
+        android:label="Discover"
+        tools:layout="@layout/fragment_discover" />
+
+    <fragment
+        android:id="@+id/savedFragment"
+        android:name="com.example.moviereview.ui.views.saved.SavedFragment"
+        android:label="Saved"
+        tools:layout="@layout/fragment_saved" />
+
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.example.moviereview.ui.views.moviedetail.MovieDetailFragment"
+        android:label=""
+        tools:layout="@layout/fragment_movie_detail" />
+
+    <fragment
+        android:id="@+id/tvShowDetailFragment"
+        android:name="com.example.moviereview.ui.views.tvshowdetail.TvShowDetailFragment"
+        android:label=""
+        tools:layout="@layout/fragment_tv_show_detail" />
+
+    <fragment
+        android:id="@+id/tvShowSeasonEpisodesFragment"
+        android:name="com.example.moviereview.ui.views.tvshowdetail.seasonsepisodes.TvShowSeasonEpisodesFragment"
+        android:label=""
+        tools:layout="@layout/fragment_tv_show_season_episodes" />
+
+</navigation>

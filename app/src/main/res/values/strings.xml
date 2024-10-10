@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Tmdb</string>
+
+    <string name="label_no_recommendations">No recommendations found.</string>
+    <string name="label_no_description">No description.</string>
+    <string name="label_no_images">No images found.</string>
+    <string name="label_loading">Loading…</string>
+
+    <string name="label_episodes">Number of episodes : %d</string>
+    <string name="label_average">%.2f/10</string>
+
+    <string name="title_type">Type</string>
+    <string name="title_genre">Genre</string>
+    <string name="title_network">Network</string>
+
+    <string name="menu_filter">Filter</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_discover">Discover</string>
+    <string name="menu_saved">Saved</string>
+
+    <string name="button_close">Close</string>
+    <string name="button_search">Search</string>
+
+    <string name="title_trending_today">Trending today</string>
+    <string name="title_popular_movies">Popular movies</string>
+    <string name="title_popular_tv_shows">Popular tv shows</string>
+
+    <string name="title_information">Information</string>
+    <string name="title_seasons">Seasons</string>
+    <string name="title_overview">Overview</string>
+    <string name="title_similar">Similar</string>
+    <string name="title_images">Images</string>
+    <string name="title_cast">Cast</string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="try_again">Try again</string>
+</resources>

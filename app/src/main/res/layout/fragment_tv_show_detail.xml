@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.example.moviereview.ui.models.UITvShowDetail" />
+
+        <variable
+            name="viewStatus"
+            type="com.example.moviereview.ui.utils.DataStatus.Status" />
+
+        <variable
+            name="isSaved"
+            type="Boolean" />
+
+        <import type="android.view.View" />
+
+        <import type="com.example.moviereview.ui.utils.DataStatus.Status" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.views.tvshowdetail.TvShowDetailFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/tvShowDetailInformation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/tvShowDetailViewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/margin_default"
+                    android:layout_marginEnd="@dimen/margin_default"
+                    android:visibility="@{viewStatus == Status.SUCCESS ? View.VISIBLE : View.GONE}" />
+
+                <include
+                    android:id="@+id/tvShowDetailLoading"
+                    layout="@layout/layout_loading"
+                    android:visibility="@{viewStatus == Status.LOADING ? View.VISIBLE : View.GONE}" />
+
+                <include
+                    android:id="@+id/tvShowDetailError"
+                    layout="@layout/layout_error"
+                    android:visibility="@{viewStatus == Status.ERROR ? View.VISIBLE : View.GONE}" />
+
+                <include
+                    android:id="@+id/tvShowDetailEmpty"
+                    layout="@layout/layout_empty"
+                    android:visibility="@{viewStatus == Status.EMPTY ? View.VISIBLE : View.GONE}" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/tvShowDetailHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            android:visibility="@{viewStatus == Status.SUCCESS ? View.VISIBLE : View.GONE}"
+            app:elevation="0dp"
+            tools:visibility="visible">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="@android:color/transparent"
+                app:expandedTitleTextAppearance="@android:color/transparent"
+                app:layout_scrollFlags="scroll|snap">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/tvShowDetailBackdropImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/backdrop_placeholder"
+                        app:backdropImage="@{data.backdropPath}"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fbSaveTvShow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_default"
+                        android:tint="@android:color/white"
+                        app:layout_constraintBottom_toBottomOf="@id/tvShowDetailBackdropImage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:savedStatusImg="@{isSaved}" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/tvShowDetailPosterCv"
+                        android:layout_width="120dp"
+                        android:layout_height="175dp"
+                        android:layout_marginStart="@dimen/margin_default"
+                        app:cardCornerRadius="@dimen/margin_default"
+                        app:cardElevation="0dp"
+                        app:layout_constraintBottom_toBottomOf="@id/tvShowDetailInfoLayout"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <ImageView
+                            android:id="@+id/tvShowDetailPoster"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/poster_placeholder"
+                            app:posterImage="@{data.posterPath}" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:id="@+id/tvShowDetailInfoLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_default"
+                        android:layout_marginTop="@dimen/margin_default"
+                        android:layout_marginEnd="@dimen/margin_default"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tvShowDetailPosterCv"
+                        app:layout_constraintTop_toBottomOf="@id/tvShowDetailBackdropImage">
+
+                        <TextView
+                            android:id="@+id/tvShowDetailTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="marquee"
+                            android:text="@{data.name}"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            tools:text="Rick and Morty" />
+
+                        <TextView
+                            android:id="@+id/tvShowDetailGenres"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_half"
+                            android:ellipsize="marquee"
+                            android:singleLine="true"
+                            android:text="@{data.genres}"
+                            android:textSize="16sp"
+                            tools:text="Action, Sci-Fi, Drama" />
+
+                        <TextView
+                            android:id="@+id/tvShowDetailAverage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_half"
+                            android:ellipsize="marquee"
+                            android:text="@{@string/label_average(data.voteAverage)}"
+                            android:textSize="16sp"
+                            tools:text="9.5/10" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tvShowDetailTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_default"
+                android:layout_marginTop="@dimen/margin_default"
+                android:layout_marginEnd="@dimen/margin_default"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabSelectedTextColor="@color/colorPrimary"
+                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
